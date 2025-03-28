@@ -9,7 +9,7 @@ const MULTISEND_SIGNATURES = [
 
 export interface DecodedValue {
     label?: string,
-    value: any,
+    value: unknown,
     signatures?: ReadonlyArray<string>,
     decoded?: Decoded,
     canCollapse?: boolean
@@ -29,7 +29,7 @@ export const loadSignatures = async (data: string): Promise<string[] | undefined
     const signature = data.slice(0, 10)
     const lookup = await axios.get(signatureLookupUrl + signature)
     if (lookup.data.results.length == 0) return undefined
-    return lookup.data.results.map((sig: any) => sig.text_signature)
+    return lookup.data.results.map((sig: { text_signature: string }) => sig.text_signature)
 }
 
 export const decodeData = async (functionSignature: string, data: string): Promise<Decoded | undefined> => {
