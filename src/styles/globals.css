@@ -13,6 +13,9 @@
   --text-primary-color: #121312;
   --text-secondary-color: #A1A3A7;
   --text-contrast-color: #ffffff;
+  --text-link-color: #000000;
+  --light-border:#DCDEE0;
+  --space-3: 12px;
   --space-6: 24px;
   --space-9: 40px;
   --raduis-2x: 8px;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { DM_Sans } from "next/font/google";
+import { DM_Sans, DM_Mono } from "next/font/google";
 import "../styles/globals.css";
 
 const geistSans = Geist({
@@ -19,6 +19,12 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
 });
 
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
 export const metadata: Metadata = {
   title: "Safe Transaction Decoder",
   description: "Decode Safe Transaction",
@@ -31,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} ${dmMono.variable}`}>
         {children}
       </body>
     </html>

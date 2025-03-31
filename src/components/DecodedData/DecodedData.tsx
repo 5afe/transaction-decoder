@@ -43,31 +43,47 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean }
         setCollapsedValue(!!param.canCollapse && typeof param.value === 'string' && param.value.length > 100)
         if (!param.decoded && selectedSignature) loadDecodedData(selectedSignature)
     }, [param, setSelectedSignature, loadDecodedData])
-    return (<>
-        <span>
-            {param.label !== undefined && (
-                <span className={classes.functionLabel}>{param.label}</span>
-            )}
-            &nbsp;
-            {param.canCollapse !== undefined && (
-                <a onClick={() => setCollapsedValue(!collapseValue)} color="inherit">{ collapseValue ? "Expand" : "Collapse"}</a>
-            )}
-        </span>
-        {param.value !== undefined && !hideValue && (
-            <span className={classes.values}>
-                {collapseValue ? String(param.value).slice(0, 90) + "..." : String(param.value)}
+    return (
+        <div className={classes.decodedParamContainer}>
+            <span>
+                {param.label !== undefined && (
+                    <span className={classes.functionLabel}>{param.label}</span>
+                )}
             </span>
-        )}
-        {param.signatures && param.signatures.length > 1 && (
-            <FormControl className={classes.formControl}>
-                <InputLabel>Signature/ Encoding</InputLabel>
-                <Select value={selectedSignature} onChange={selectSignature}>
-                    {param.signatures.map((sig) => (<MenuItem value={sig} key={sig}>{sig}</MenuItem>))}
-                </Select>
-            </FormControl>
-        )}
-        { decodedData && <DecodedData decoded={decodedData} />}
-    </>)
+            {param.value !== undefined && !hideValue && (
+                <span className={classes.values}>
+                    {collapseValue ? (
+                        <>
+                            {String(param.value).slice(0, 90) + "..."}
+                            {param.canCollapse !== undefined && (
+                                <a onClick={() => setCollapsedValue(!collapseValue)} color="inherit" className={classes.showAllLink}>
+                                    Show all
+                                </a>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            {String(param.value)}
+                            {param.canCollapse !== undefined && (
+                                <a onClick={() => setCollapsedValue(!collapseValue)} color="inherit" className={classes.showAllLink}>
+                                    {" "}Collapse
+                                </a>
+                            )}
+                        </>
+                    )}
+                </span>
+            )}
+            {/* {param.signatures && param.signatures.length > 1 && (
+                <FormControl className={classes.formControl}>
+                    <InputLabel>Signature/ Encoding</InputLabel>
+                    <Select value={selectedSignature} onChange={selectSignature}>
+                        {param.signatures.map((sig) => (<MenuItem value={sig} key={sig}>{sig}</MenuItem>))}
+                    </Select>
+                </FormControl>
+            )} */}
+            { decodedData && <DecodedData decoded={decodedData} />}
+        </div>
+    )
 }
 
 const DecodedData: React.FC<Props> = ({ decoded }) => {
@@ -75,12 +91,16 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
     const [isExpanded, setIsExpanded] = useState(true);
 
     const isTransactionLabel = decoded.label?.startsWith('Transaction ');
+    const isMultisend = decoded.label === 'Multisend transactions';
 
     return (
         <div>
-            {decoded.label === 'Multisend transactions' ? (
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <span>{decoded.label}</span>
+            {isMultisend ? (
+                <Box 
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                    className={classes.multisendDropdown}
+                >
+                    <span className={classes.textLabel}>{decoded.label}</span>
                     <IconButton
                         onClick={() => setIsExpanded(!isExpanded)}
                         size="small"
@@ -89,9 +109,13 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
                     </IconButton>
                 </Box>
             ) : (
-                <span className={isTransactionLabel ? classes.transactionLabel : classes.functionName}>
-                    {decoded.label}
-                </span>
+                <>
+                    <span className={isTransactionLabel ? classes.transactionLabel : classes.functionName}>
+                        {decoded.label}
+                    </span>
+                    {!isTransactionLabel && <hr className={classes.divider} />}
+                <span className={classes.textLabel}>Data</span>
+                </>
             )}
             <Collapse in={isExpanded}>
                 {decoded.params.map((param, index) => (

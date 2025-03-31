@@ -4,7 +4,7 @@ export const useStyles = makeStyles(() => ({
     root: {
         padding: "4px",
         width: '1076px',
-        height: '612px',
+        height: '624px',
         marginTop: '120px',
         marginLeft: '182px',
         display: 'flex',
@@ -35,13 +35,13 @@ export const useStyles = makeStyles(() => ({
     fontSize: '20px',
         lineHeight: '130%',
         letterSpacing: '0.15px'
+    
     },
 
-    inputBox: {
+    Box: {
         padding: 'var(--space-9)',
         backgroundColor: 'var(--background-paper)',
         borderRadius: 'var(--raduis-2x)',
-        boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
     },
     transactionDataSubtitle: {
         fontFamily: 'DM Sans',
@@ -113,5 +113,15 @@ export const useStyles = makeStyles(() => ({
         '&:hover': {
             backgroundColor: 'var(--background-white)', 
         }
-    }
+    },
+    placeholderText: {
+        fontFamily: 'DM Sans',
+        fontWeight: 400,
+        fontSize: '14px',
+        lineHeight: '20px',
+        letterSpacing: '0.17px',
+        textAlign: 'center',
+        padding: 'var(--space-6) 0',
+        color: 'var(--text-secondary-color)'
+    },
 }));
