@@ -49,7 +49,7 @@ function App() {
         
         <Grid container spacing={2}>
           {/* Input Box */}
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Paper elevation={1} sx={{ height: '100%' }}>
               <Box p={3} className={classes.Box}>
                 <Box className={classes.transactionDataContainer}>
@@ -101,7 +101,7 @@ function App() {
           </Grid>
 
           {/* Output Box */}
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Paper elevation={1}>
               <Box p={3} className={classes.Box}>
                 <Typography variant="h6" gutterBottom className={classes.transactionData}>
