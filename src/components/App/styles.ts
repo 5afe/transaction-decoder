@@ -3,20 +3,29 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles(() => ({
     root: {
         padding: "4px",
-        width: '1076px',
-        height: '624px',
+        width: '100%',
+        maxWidth: '1076px',
+        height: 'auto',
         marginTop: '120px',
-        marginLeft: '182px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--space-6)'
+        gap: 'var(--space-6)',
+        '@media (max-width: 768px)': {
+            marginTop: '60px',
+            padding: '16px',
+        }
     },
     title: {
         fontFamily: 'DM Sans',
         fontWeight: 700,
         fontSize: '32px',
         lineHeight: '117%',
-        letterSpacing: '0px'
+        letterSpacing: '0px',
+        '@media (max-width: 768px)': {
+            fontSize: '24px',
+        }
     },
     textField: {
         width: '100%',
@@ -30,14 +39,15 @@ export const useStyles = makeStyles(() => ({
         },
     },
     transactionData: {
-    fontFamily: 'DM Sans',
-    fontWeight: 700,
-    fontSize: '20px',
+        fontFamily: 'DM Sans',
+        fontWeight: 700,
+        fontSize: '20px',
         lineHeight: '130%',
-        letterSpacing: '0.15px'
-    
+        letterSpacing: '0.15px',
+        '@media (max-width: 768px)': {
+            fontSize: '18px',
+        }
     },
-
     Box: {
         padding: 'var(--space-9)',
         backgroundColor: 'var(--background-paper)',
@@ -50,7 +60,10 @@ export const useStyles = makeStyles(() => ({
         fontSize: '16px',
         lineHeight: '22px',
         letterSpacing: '0.15px',
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        '@media (max-width: 768px)': {
+            fontSize: '14px',
+        }
     },
     transactionDataContainer: {
         alignItems: 'center',

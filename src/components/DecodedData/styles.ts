@@ -2,8 +2,17 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles(() => ({
     formControl: {
-        margin: "4px",
+        margin: "0 0 16px 0",
         minWidth: 120,
+        width: '100%',
+        '& .MuiInputLabel-root': {
+            fontSize: '14px',
+            fontFamily: 'DM Sans',
+        },
+        '& .MuiSelect-select': {
+            fontSize: '14px',
+            fontFamily: 'DM Sans',
+        }
     },
     selectEmpty: {
         marginTop: "4px",
@@ -19,12 +28,10 @@ export const useStyles = makeStyles(() => ({
         fontWeight: 700,
         fontSize: '14px',
         lineHeight: '20px',
-        letterSpacing: '0.17px',
         color: 'var(--text-link-color)',
-        textDecoration: 'underline',
-        textDecorationStyle: 'solid',
-        textDecorationThickness: '0%',
-        textUnderlineOffset: '0%'
+        textDecoration: 'none',
+        marginLeft: '8px',
+        cursor: 'pointer'
     },
 
     functionLabel: {
@@ -60,14 +67,89 @@ export const useStyles = makeStyles(() => ({
         color: 'var(--text-primary-color)'
     },
     multisendDropdown: {
-        width: '446px',
-        height: '56px',
+        width: '100%',
+        minHeight: '56px',
         borderRadius: '6px',
         border: '1px solid var(--light-border)',
+        backgroundColor: 'var(--background-paper)',
+        marginBottom: '8px'
+    },
+    multisendContainer: {
+        width: '100%',
+        backgroundColor: 'var(--background-paper)',
+        borderRadius: '6px',
+        border: '1px solid var(--light-border)',
+    },
+    multisendHeader: {
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         padding: '16px',
-        marginBottom: 'var(--space-6)'
+        cursor: 'pointer',
+        backgroundColor: 'var(--background-main)',
+        '&:hover': {
+            backgroundColor: 'var(--background-hover)'
+        }
+    },
+    multisendContent: {
+        backgroundColor: 'var(--background-paper)',
+        padding: '16px',
+        borderTop: '1px solid var(--light-border)',
+    },
+    transactionsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+    },
+    transactionItem: {
+        backgroundColor: 'var(--background-paper)',
+        borderRadius: '6px',
+        border: '1px solid var(--light-border)',
+    },
+    transactionHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '16px',
+        cursor: 'pointer',
+        '&:hover': {
+            backgroundColor: 'var(--background-hover)'
+        },
+        '&.expanded': {
+            backgroundColor: 'var(--background-main)'
+        }
+    },
+    transactionContent: {
+        padding: '24px',
+        borderTop: '1px solid var(--light-border)',
+        backgroundColor: 'var(--background-paper)',
+    },
+    paramRow: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: '16px',
+        '&.with-divider': {
+            borderBottom: '1px solid var(--light-border)',
+            paddingBottom: '16px'
+        }
+    },
+    paramLabel: {
+        color: 'var(--text-secondary-color)',
+        fontFamily: 'DM Sans',
+        fontSize: '14px',
+        fontWeight: 400,
+        lineHeight: '20px',
+    },
+    paramValue: {
+        fontFamily: 'DM Sans',
+        fontSize: '14px',
+        fontWeight: 400,
+        lineHeight: '20px',
+        color: 'var(--text-primary-color)',
+        textAlign: 'right',
+        maxWidth: '60%',
+        wordBreak: 'break-all'
     },
     textLabel: {
         fontFamily: 'DM Sans',
@@ -78,5 +160,34 @@ export const useStyles = makeStyles(() => ({
     },
     decodedParamContainer: {
         marginBottom: 'var(--space-6)'
+    },
+    signatureSection: {
+        marginTop: '24px',
+        borderTop: '1px solid var(--light-border)',
+        paddingTop: '24px'
+    },
+    signatureLabel: {
+        fontFamily: 'DM Sans',
+        fontSize: '14px',
+        fontWeight: 700,
+        lineHeight: '20px',
+        marginBottom: '8px'
+    },
+    signatureSelect: {
+        width: '100%',
+        height: '40px',
+        border: '1px solid var(--light-border)',
+        borderRadius: '6px',
+        padding: '8px 16px',
+        backgroundColor: 'var(--background-paper)',
+        marginBottom: '16px'
+    },
+    signatureValue: {
+        fontFamily: 'DM Mono',
+        fontSize: '14px',
+        fontWeight: 400,
+        lineHeight: '20px',
+        color: 'var(--text-primary-color)',
+        wordBreak: 'break-all'
     }
 }));
