@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Decoded, DecodedValue, decodeData } from '../../utils/decoding';
+import { Decoded, DecodedValue, decodeData, loadSignatures } from '../../utils/decoding';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { IconButton, Collapse, Box } from '@mui/material';
+import { IconButton, Collapse } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useStyles } from './styles';
@@ -44,7 +44,7 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean, 
         if (!param.decoded && selectedSignature) loadDecodedData(selectedSignature)
     }, [param, setSelectedSignature, loadDecodedData])
     return (
-        <div className={classes.decodedParamContainer}>
+        <div>
             <span>
                 {param.label !== undefined && (
                     <span className={classes.functionLabel}>{param.label}</span>
@@ -73,7 +73,7 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean, 
                     )}
                 </span>
             )}
-            {showSignatures && param.signatures && param.signatures.length > 1 && (
+            {showSignatures && param.signatures && param.signatures.length >= 1 && (
                 <FormControl className={classes.formControl}>
                     <InputLabel>Signature/ Encoding</InputLabel>
                     <Select value={selectedSignature} onChange={selectSignature}>
@@ -100,7 +100,7 @@ export const TransactionParam: React.FC<{
     );
 };
 
-export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> = ({ param, index }) => {
+export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> = ({ param }) => {
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(false);
     const [selectedSignature, setSelectedSignature] = useState<string>("");
@@ -142,6 +142,9 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
     const signatures = dataParam?.signatures || [];
     const shortenedData = data ? `${data.slice(0, 30)}...` : '';
 
+    // Check if this transaction contains a setApprovalForAll call
+    const isSetApprovalForAll = decodedData?.label === 'setApprovalForAll(address,bool)';
+
     return (
         <div className={classes.transactionItem}>
             <div 
@@ -150,7 +153,6 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
             >
                 <span className={classes.textLabel}>{param.decoded?.label}</span>
                 <IconButton
-                    className={classes.iconButton}
                     size="small"
                     onClick={(e) => {
                         e.stopPropagation();
@@ -168,7 +170,7 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
                                 <div key={i} className={classes.paramRow}>
                                     <span className={classes.paramLabel}>Data</span>
                                     <span className={classes.paramValue}>
-                                        {showFullData ? p.value : shortenedData}
+                                        {showFullData ? String(p.value) : shortenedData}
                                         <a 
                                             className={classes.showAllLink}
                                             onClick={() => setShowFullData(!showFullData)}
@@ -193,7 +195,8 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
                         );
                     })}
                     
-                    {signatures.length > 0 && (
+                    {/* Always show signatures for setApprovalForAll or if signatures are available */}
+                    {(isSetApprovalForAll || signatures.length > 0) && (
                         <div className={classes.signatureSection}>
                             <div className={classes.signatureLabel}>Signature/Encoding</div>
                             <Select
@@ -222,6 +225,36 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
 const DecodedData: React.FC<Props> = ({ decoded }) => {
     const classes = useStyles();
     const [isExpanded, setIsExpanded] = useState(true);
+    const isSetApprovalForAll = decoded.label === 'setApprovalForAll(address,bool)';
+    const isSignMessage = decoded.label === 'signMessage(bytes)';
+    const [setApprovalSignatures, setSetApprovalSignatures] = useState<string[]>([]);
+    const [selectedSetApprovalSignature, setSelectedSetApprovalSignature] = useState<string>("");
+    
+    // Fetch signatures for setApprovalForAll
+    useEffect(() => {
+        const fetchSetApprovalSignatures = async () => {
+            if (isSetApprovalForAll) {
+                try {
+                    // For setApprovalForAll, a common selector is 0xa22cb465
+                    // But we'll fetch it dynamically to be safe
+                    const sampleData = "0xa22cb4650000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001";
+                    const signatures = await loadSignatures(sampleData);
+                    if (signatures && signatures.length > 0) {
+                        setSetApprovalSignatures(signatures);
+                        setSelectedSetApprovalSignature(signatures[0]);
+                    }
+                } catch (e) {
+                    console.error("Failed to load setApprovalForAll signatures:", e);
+                }
+            }
+        };
+        
+        fetchSetApprovalSignatures();
+    }, [isSetApprovalForAll]);
+
+    const handleSetApprovalSignatureChange = (event: SelectChangeEvent<string>) => {
+        setSelectedSetApprovalSignature(event.target.value);
+    };
 
     const isMultisend = decoded.label === 'Multisend transactions';
 
@@ -234,7 +267,6 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
                 >
                     <span className={classes.textLabel}>{decoded.label}</span>
                     <IconButton
-                        className={classes.iconButton}
                         size="small"
                         onClick={(e) => {
                             e.stopPropagation();
@@ -258,6 +290,64 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
     }
 
     const isTransactionLabel = decoded.label?.startsWith('Transaction ');
+
+    // For signMessage function, add specific formatting
+    if (isSignMessage) {
+        return (
+            <div>
+                <span className={classes.functionName}>
+                    {decoded.label}
+                </span>
+                <div className={classes.signatureSection}>
+                    <div className={classes.signatureLabel}>Parameters</div>
+                    {decoded.params.map((param, index) => {
+                        return (
+                            <div key={index} className={classes.paramRow}>
+                                <span className={classes.paramLabel}>bytes</span>
+                                <span className={classes.paramValue}>
+                                    {String(param.value)}
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+
+    // For setApprovalForAll function, add specific formatting
+    if (isSetApprovalForAll) {
+        return (
+            <div>
+                <span className={classes.functionName}>
+                    {decoded.label}
+                </span>
+                <div className={classes.signatureSection}>
+                    <div className={classes.signatureLabel}>Signature/Encoding</div>
+                    <Select
+                        className={classes.signatureSelect}
+                        value={selectedSetApprovalSignature}
+                        onChange={handleSetApprovalSignatureChange}
+                        displayEmpty
+                    >
+                        {setApprovalSignatures.map((sig) => (
+                            <MenuItem value={sig} key={sig}>{sig}</MenuItem>
+                        ))}
+                    </Select>
+                </div>
+                <span className={classes.textLabel}>Data</span>
+                <Collapse in={isExpanded}>
+                    {decoded.params.map((param, index) => (
+                        <DecodedParam 
+                            param={param} 
+                            key={index}
+                            showSignatures={false}
+                        />
+                    ))}
+                </Collapse>
+            </div>
+        );
+    }
 
     return (
         <div>

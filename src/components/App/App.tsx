@@ -50,7 +50,7 @@ function App() {
         <Grid container spacing={2}>
           {/* Input Box */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={1} sx={{ height: '100%' }}>
+            <Paper elevation={1}>
               <Box p={3} className={classes.Box}>
                 <Box className={classes.transactionDataContainer}>
                   <Typography variant="h6" gutterBottom className={classes.transactionData}>
@@ -105,7 +105,7 @@ function App() {
             <Paper elevation={1}>
               <Box p={3} className={classes.Box}>
                 <Typography variant="h6" gutterBottom className={classes.transactionData}>
-                  Decoded transaction
+                Called method
                 </Typography>
                 {dataInfo ? (
                   <DecodedParam param={dataInfo} hideValue={true} />

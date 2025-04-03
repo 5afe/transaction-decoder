@@ -50,6 +50,7 @@ export const useStyles = makeStyles(() => ({
     },
     Box: {
         padding: 'var(--space-9)',
+        gap: 'var(--space-6)',
         backgroundColor: 'var(--background-paper)',
         borderRadius: 'var(--raduis-2x)',
     },
