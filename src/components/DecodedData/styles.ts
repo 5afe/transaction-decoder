@@ -140,6 +140,7 @@ export const useStyles = makeStyles(() => ({
         fontSize: '14px',
         fontWeight: 400,
         lineHeight: '20px',
+        letterSpacing: '0.17px'
     },
     paramValue: {
         fontFamily: 'DM Sans',
@@ -149,7 +150,8 @@ export const useStyles = makeStyles(() => ({
         color: 'var(--text-primary-color)',
         textAlign: 'right',
         maxWidth: '60%',
-        wordBreak: 'break-all'
+        wordBreak: 'break-all',
+        letterSpacing: '0.17px'
     },
     textLabel: {
         fontFamily: 'DM Sans',
@@ -157,9 +159,6 @@ export const useStyles = makeStyles(() => ({
         fontSize: '14px',
         lineHeight: '20px',
         letterSpacing: '0.1px'
-    },
-    decodedParamContainer: {
-        marginBottom: 'var(--space-6)'
     },
     signatureSection: {
         marginTop: '24px',
@@ -171,22 +170,33 @@ export const useStyles = makeStyles(() => ({
         fontSize: '14px',
         fontWeight: 700,
         lineHeight: '20px',
-        marginBottom: '8px'
+        letterSpacing: '0.1px',
+        marginBottom: '8px',
+        color: 'var(--text-primary-color)'
     },
     signatureSelect: {
         width: '100%',
         height: '40px',
         border: '1px solid var(--light-border)',
         borderRadius: '6px',
-        padding: '8px 16px',
         backgroundColor: 'var(--background-paper)',
-        marginBottom: '16px'
+        paddingRight: '12px',
+        marginBottom: '16px',
+        '& .MuiSelect-select': {
+            fontFamily: 'DM Sans',
+            fontWeight: 400,
+            fontSize: '16px',
+            lineHeight: '24px',
+            letterSpacing: '0.15px',
+            verticalAlign: 'middle',
+        }
     },
     signatureValue: {
-        fontFamily: 'DM Mono',
+        fontFamily: 'DM Sans',
         fontSize: '14px',
         fontWeight: 400,
         lineHeight: '20px',
+        letterSpacing: '0.17px',
         color: 'var(--text-primary-color)',
         wordBreak: 'break-all'
     }
