@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   title: "Safe Transaction Decoder",
   description: "Decode Safe Transaction",
   icons: {
-    icon: '/assets/favicon.ico',
+    icon: "safe.svg",
   },
 };
 
