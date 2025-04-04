@@ -5,16 +5,22 @@ export const useStyles = makeStyles(() => ({
         padding: "4px",
         width: '100%',
         maxWidth: '1076px',
-        height: 'auto',
+        minHeight: 'calc(100vh - 120px)',
         marginTop: '120px',
         marginLeft: 'auto',
         marginRight: 'auto',
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--space-6)',
+        position: 'relative',
+        paddingBottom: '70px',
+        marginBottom: '60px',
         '@media (max-width: 768px)': {
             marginTop: '60px',
             padding: '16px',
+            paddingBottom: '70px',
+            minHeight: 'calc(100vh - 60px)',
+            marginBottom: '60px',
         }
     },
     title: {
@@ -138,4 +144,27 @@ export const useStyles = makeStyles(() => ({
         padding: 'var(--space-6) 0',
         color: 'var(--text-secondary-color)'
     },
+    footer: {
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        height: '54px',
+        padding: '16px 0',
+        textAlign: 'center',
+        fontFamily: 'DM Sans',
+        fontWeight: 400,
+        fontSize: '16px',
+        lineHeight: '22px',
+        letterSpacing: '0.15px',
+        color: 'var(--primary-light-font-color)',
+        zIndex: 100
+    },
+    footerLink: {
+        fontWeight: 700,
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'underline'
+        }
+    }
 }));
