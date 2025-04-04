@@ -68,31 +68,6 @@ export const TransactionLabel = styled('span')(() => ({
     color: 'var(--text-primary-color)'
 }));
 
-export const MultisendContainer = styled(Box)(() => ({
-    width: '100%',
-    backgroundColor: 'var(--background-paper)',
-    borderRadius: '6px',
-    border: '1px solid var(--light-border)',
-}));
-
-export const MultisendHeader = styled(Box)(() => ({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '16px',
-    cursor: 'pointer',
-    backgroundColor: 'var(--background-main)',
-    '&:hover': {
-        backgroundColor: 'var(--background-hover)'
-    }
-}));
-
-export const MultisendContent = styled(Box)(() => ({
-    backgroundColor: 'var(--background-paper)',
-    padding: '16px',
-    borderTop: '1px solid var(--light-border)',
-}));
-
 export const TransactionsContainer = styled(Box)(() => ({
     display: 'flex',
     flexDirection: 'column',
