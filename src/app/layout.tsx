@@ -28,6 +28,9 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = {
   title: "Safe Transaction Decoder",
   description: "Decode Safe Transaction",
+  icons: {
+    icon: '/assets/favicon.ico',
+  },
 };
 
 export default function RootLayout({

@@ -12,6 +12,7 @@ export const createAppTheme = (prefersDarkMode: boolean) => createTheme({
     },
   },
   typography: {
+    fontFamily: 'DM Sans, sans-serif',
     h4: {
       fontWeight: 600,
     },

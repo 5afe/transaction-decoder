@@ -1,20 +1,42 @@
 "use client"
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
-import { TextField, Paper, Grid, Typography, Box, Button, Link } from '@mui/material';
+import { Paper, Grid } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import { DecodedParam } from '../DecodedData/DecodedData';
 import { DecodedValue, loadSignatures } from '../../utils/decoding';
 import { createAppTheme } from '../../styles/theme';
-import { useStyles } from './styles';
+import { 
+  Root, 
+  Title, 
+  StyledTextField, 
+  TransactionData, 
+  StyledBox, 
+  TransactionDataSubtitle,
+  TransactionDataContainer,
+  TransactionInputSubtitle,
+  TransactionInputContainer,
+  ButtonContainer,
+  DecodeButton,
+  ClearButton,
+  PlaceholderText,
+  Footer,
+  FooterLink
+} from './styles';
 
 function App() {
   const query = useSearchParams()
   const [txData, setTxData] = useState(query.get("data") || "")
   const [dataInfo, setDataInfo] = useState<DecodedValue | undefined>(undefined)
+  const [isMounted, setIsMounted] = useState(false)
+  
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+  
   const loadDataInfo = useCallback(async (data: string) => {
     setTxData(data)
     if (data.length < 10) {
@@ -32,37 +54,37 @@ function App() {
       console.error(e)
     }
   }, [])
+  
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const theme = React.useMemo(() => createAppTheme(prefersDarkMode), [prefersDarkMode])
-  const classes = useStyles();
+  
+  if (!isMounted) {
+    return <div style={{ visibility: 'hidden' }}></div>;
+  }
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className={classes.root}>
-        <Typography 
-          variant="h3" 
-          component="h1"
-          className={classes.title}
-        >
+      <Root>
+        <Title variant="h3">
           Decode Safe Transaction
-        </Typography>
+        </Title>
         
         <Grid container spacing={2}>
           {/* Input Box */}
           <Grid item xs={12} md={6}>
             <Paper elevation={1}>
-              <Box p={3} className={classes.Box}>
-                <Box className={classes.transactionDataContainer}>
-                  <Typography variant="h6" gutterBottom className={classes.transactionData}>
+              <StyledBox>
+                <TransactionDataContainer>
+                  <TransactionData variant="h6" gutterBottom>
                     Transaction data
-                  </Typography>
-                  <Typography variant="body1" gutterBottom className={classes.transactionDataSubtitle}>
+                  </TransactionData>
+                  <TransactionDataSubtitle variant="body1" gutterBottom>
                     Use raw transaction data to decode its function.
-                  </Typography>
-                </Box>
-                <Box className={classes.transactionInputContainer}>
-                  <TextField
-                    className={classes.textField}
+                  </TransactionDataSubtitle>
+                </TransactionDataContainer>
+                <TransactionInputContainer>
+                  <StyledTextField
                     multiline
                     rows={8}
                     variant="outlined"
@@ -71,63 +93,61 @@ function App() {
                     value={txData}
                     onChange={(e) => setTxData(e.target.value)}
                   />
-                  <Typography variant="body1" gutterBottom className={classes.transactionInputSubtitle}>
+                  <TransactionInputSubtitle variant="body1" gutterBottom>
                     eg. 0x8d80ff0a000000...
-                  </Typography>
-                </Box>
-                <Box className={classes.buttonContainer}>
-                  <Button 
-                    className={classes.decodeButton}
+                  </TransactionInputSubtitle>
+                </TransactionInputContainer>
+                <ButtonContainer>
+                  <DecodeButton
                     variant="contained" 
                     color="primary" 
                     onClick={() => loadDataInfo(txData)}
                     disabled={!txData.trim()}
                   >
                     Decode transaction
-                  </Button>
+                  </DecodeButton>
                   {txData.trim() && (
-                    <Button 
+                    <ClearButton
                       variant="contained" 
                       color="primary" 
                       onClick={() => {
                         setTxData("");
                         setDataInfo(undefined);
-                      }} 
-                      className={classes.clearButton}
+                      }}
                     >
                       Clear all
-                    </Button>
+                    </ClearButton>
                   )}
-                </Box>
-              </Box>
+                </ButtonContainer>
+              </StyledBox>
             </Paper>
           </Grid>
 
           {/* Output Box */}
           <Grid item xs={12} md={6}>
             <Paper elevation={1}>
-              <Box p={3} className={classes.Box}>
-                <Typography variant="h6" gutterBottom className={classes.transactionData}>
+              <StyledBox>
+                <TransactionData variant="h6" gutterBottom>
                 Called method
-                </Typography>
+                </TransactionData>
                 {dataInfo ? (
                   <DecodedParam param={dataInfo} hideValue={true} />
                 ) : (
-                  <Typography className={classes.placeholderText}>
+                  <PlaceholderText>
                     Your decoded transaction data will appear here.
-                  </Typography>
+                  </PlaceholderText>
                 )}
-              </Box>
+              </StyledBox>
             </Paper>
           </Grid>
         </Grid>
         
         {/* Footer */}
-        <Typography className={classes.footer}>
-          made by <Link href="https://github.com/rmeissner" className={classes.footerLink} target="_blank" rel="noopener">rmeissner</Link>. 
-          powered by <Link href="https://www.4byte.directory" className={classes.footerLink} target="_blank" rel="noopener">4byte.directory</Link>
-        </Typography>
-      </div>
+        <Footer>
+          made by <FooterLink href="https://github.com/rmeissner" target="_blank" rel="noopener">rmeissner</FooterLink>. 
+          powered by <FooterLink href="https://www.4byte.directory" target="_blank" rel="noopener">4byte.directory</FooterLink>
+        </Footer>
+      </Root>
     </ThemeProvider>
   );
 }
