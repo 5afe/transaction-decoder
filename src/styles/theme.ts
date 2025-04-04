@@ -4,11 +4,11 @@ export const createAppTheme = (prefersDarkMode: boolean) => createTheme({
   palette: {
     mode: prefersDarkMode ? 'dark' : 'light',
     primary: {
-      main: '#000000',
+      main: prefersDarkMode ? '#ffffff' : '#000000',
     },
     background: {
       default: 'var(--background-main)',
-      paper: '#ffffff',
+      paper: 'var(--background-paper)',
     },
   },
   typography: {

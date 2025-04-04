@@ -48,10 +48,10 @@ export const useStyles = makeStyles(() => ({
         fontWeight: 400,
         lineHeight: '22px',
         letterSpacing: '0px',
-        backgroundColor: '#E8E8E8',
+        backgroundColor: 'var(--function-name-bg)',
         padding: '4px 8px',
         borderRadius: '4px',
-        color: 'var(--primary-light-font-color)'
+        color: 'var(--function-name-color)'
     },
     divider: {
         width: '446px',

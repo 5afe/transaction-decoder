@@ -29,6 +29,7 @@ export const useStyles = makeStyles(() => ({
         fontSize: '32px',
         lineHeight: '117%',
         letterSpacing: '0px',
+        color: 'var(--text-primary-color)',
         '@media (max-width: 768px)': {
             fontSize: '24px',
         }
