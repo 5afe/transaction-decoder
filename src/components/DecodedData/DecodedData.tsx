@@ -14,9 +14,6 @@ import {
     FunctionName,
     StyledDivider,
     TransactionLabel,
-    MultisendContainer,
-    MultisendHeader,
-    MultisendContent,
     TransactionsContainer,
     TransactionItemContainer,
     TransactionHeader,
@@ -242,7 +239,7 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
 };
 
 const DecodedData: React.FC<Props> = ({ decoded }) => {
-    const [isExpanded, setIsExpanded] = useState(true);
+    const [isExpanded] = useState(true);
     const isSetApprovalForAll = decoded.label === 'setApprovalForAll(address,bool)';
     const isSignMessage = decoded.label === 'signMessage(bytes)';
     const [setApprovalSignatures, setSetApprovalSignatures] = useState<string[]>([]);
@@ -277,32 +274,13 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
     const isMultisend = decoded.label === 'Multisend transactions';
 
     if (isMultisend) {
+        // Render transactions directly without the multisend container/accordion
         return (
-            <MultisendContainer>
-                <MultisendHeader 
-                    onClick={() => setIsExpanded(!isExpanded)}
-                >
-                    <TextLabel>{decoded.label}</TextLabel>
-                    <IconButton
-                        size="small"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setIsExpanded(!isExpanded);
-                        }}
-                    >
-                        {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </MultisendHeader>
-                <Collapse in={isExpanded}>
-                    <MultisendContent>
-                        <TransactionsContainer>
-                            {decoded.params.map((param, index) => (
-                                <TransactionItem param={param} index={index} key={index} />
-                            ))}
-                        </TransactionsContainer>
-                    </MultisendContent>
-                </Collapse>
-            </MultisendContainer>
+            <TransactionsContainer>
+                {decoded.params.map((param, index) => (
+                    <TransactionItem param={param} index={index} key={index} />
+                ))}
+            </TransactionsContainer>
         );
     }
 
