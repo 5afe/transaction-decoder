@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from 'react';
 import { useSearchParams } from 'next/navigation'
-import { TextField, Paper, Grid, Typography, Box, Button } from '@mui/material';
+import { TextField, Paper, Grid, Typography, Box, Button, Link } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -89,7 +89,10 @@ function App() {
                     <Button 
                       variant="contained" 
                       color="primary" 
-                      onClick={() => setTxData("")} 
+                      onClick={() => {
+                        setTxData("");
+                        setDataInfo(undefined);
+                      }} 
                       className={classes.clearButton}
                     >
                       Clear all
@@ -118,6 +121,12 @@ function App() {
             </Paper>
           </Grid>
         </Grid>
+        
+        {/* Footer */}
+        <Typography className={classes.footer}>
+          made by <Link href="https://github.com/rmeissner" className={classes.footerLink} target="_blank" rel="noopener">rmeissner</Link>. 
+          powered by <Link href="https://www.4byte.directory" className={classes.footerLink} target="_blank" rel="noopener">4byte.directory</Link>
+        </Typography>
       </div>
     </ThemeProvider>
   );
