@@ -174,12 +174,3 @@ export const FooterLink = styled(Link)(() => ({
         textDecoration: 'underline'
     }
 }));
-
-export const ParamValue = styled(Typography)(() => ({
-    fontFamily: 'DM Sans',
-    fontSize: '14px',
-    fontWeight: 400,
-    lineHeight: '20px',
-    color: 'var(--text-primary-color)',
-    letterSpacing: '0.17px'
-}));
