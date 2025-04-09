@@ -13,14 +13,14 @@ export const Root = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     gap: 'var(--space-6)',
     position: 'relative',
-    paddingBottom: '70px',
-    marginBottom: '60px',
+    paddingBottom: '20px',
+    marginBottom: '0',
     [theme.breakpoints.down('md')]: {
         marginTop: '60px',
         padding: '16px',
-        paddingBottom: '70px',
+        paddingBottom: '20px',
         minHeight: 'calc(100vh - 60px)',
-        marginBottom: '60px',
+        marginBottom: '0',
     }
 }));
 
@@ -151,9 +151,6 @@ export const PlaceholderText = styled(Typography)(() => ({
 }));
 
 export const Footer = styled(Typography)(() => ({
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
     width: '100%',
     height: '54px',
     padding: '16px 0',
@@ -164,7 +161,7 @@ export const Footer = styled(Typography)(() => ({
     lineHeight: '22px',
     letterSpacing: '0.15px',
     color: 'var(--primary-light-font-color)',
-    zIndex: 100
+    marginTop: 'auto',
 }));
 
 export const FooterLink = styled(Link)(() => ({
@@ -173,4 +170,5 @@ export const FooterLink = styled(Link)(() => ({
     '&:hover': {
         textDecoration: 'underline'
     }
+
 }));
