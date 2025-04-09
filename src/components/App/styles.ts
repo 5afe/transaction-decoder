@@ -13,14 +13,14 @@ export const Root = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     gap: 'var(--space-6)',
     position: 'relative',
-    paddingBottom: '70px',
-    marginBottom: '60px',
+    paddingBottom: '20px',
+    marginBottom: '0',
     [theme.breakpoints.down('md')]: {
         marginTop: '60px',
         padding: '16px',
-        paddingBottom: '70px',
+        paddingBottom: '20px',
         minHeight: 'calc(100vh - 60px)',
-        marginBottom: '60px',
+        marginBottom: '0',
     }
 }));
 
@@ -85,16 +85,6 @@ export const TransactionDataContainer = styled(Box)(() => ({
     marginBottom: 'var(--space-6)'
 }));
 
-export const TransactionInputSubtitle = styled(Typography)(() => ({
-    fontFamily: 'DM Sans',
-    fontWeight: 400,
-    fontSize: '12px',
-    lineHeight: '20px',
-    letterSpacing: '0.4px',
-    color: 'var(--text-secondary-color)',
-    verticalAlign: 'middle'
-}));
-
 export const TransactionInputContainer = styled(Box)(() => ({
     display: 'flex',
     flexDirection: 'column',
@@ -118,7 +108,12 @@ export const DecodeButton = styled(Button)(() => ({
     fontSize: '14px',
     lineHeight: '26px',
     letterSpacing: '0.46px',
-    textTransform: 'none'
+    textTransform: 'none',
+    boxShadow: 'none',
+    '&:hover': {
+        backgroundColor: 'var(--button-primary-hover)',
+        boxShadow: 'none'
+    }
 }));
 
 export const ClearButton = styled(Button)(() => ({
@@ -136,6 +131,7 @@ export const ClearButton = styled(Button)(() => ({
     textTransform: 'none',
     '&:hover': {
         backgroundColor: 'var(--background-white)', 
+        boxShadow: 'none'
     }
 }));
 
@@ -151,9 +147,6 @@ export const PlaceholderText = styled(Typography)(() => ({
 }));
 
 export const Footer = styled(Typography)(() => ({
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
     width: '100%',
     height: '54px',
     padding: '16px 0',
@@ -164,7 +157,7 @@ export const Footer = styled(Typography)(() => ({
     lineHeight: '22px',
     letterSpacing: '0.15px',
     color: 'var(--primary-light-font-color)',
-    zIndex: 100
+    marginTop: 'auto',
 }));
 
 export const FooterLink = styled(Link)(() => ({
@@ -173,4 +166,5 @@ export const FooterLink = styled(Link)(() => ({
     '&:hover': {
         textDecoration: 'underline'
     }
+
 }));

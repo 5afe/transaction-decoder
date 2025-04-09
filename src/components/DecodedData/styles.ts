@@ -88,12 +88,10 @@ export const TransactionHeader = styled(Box, {
     alignItems: 'center',
     padding: '16px',
     cursor: 'pointer',
+    backgroundColor: expanded ? 'var(--background-main)' : 'transparent',
     '&:hover': {
-        backgroundColor: 'var(--background-hover)'
-    },
-    ...(expanded && {
-        backgroundColor: 'var(--background-main)'
-    })
+        backgroundColor: '#f4f4f4'
+    }
 }));
 
 export const TransactionContent = styled(Box)(() => ({
@@ -168,6 +166,9 @@ export const StyledSelect = styled(Select)(() => ({
     backgroundColor: 'var(--background-paper)',
     paddingRight: '12px',
     marginBottom: '16px',
+    '& .MuiOutlinedInput-notchedOutline': {
+        border: 'none'
+    },
     '& .MuiSelect-select': {
         fontFamily: 'DM Sans',
         fontWeight: 400,

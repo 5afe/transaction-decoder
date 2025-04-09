@@ -17,7 +17,6 @@ import {
   StyledBox, 
   TransactionDataSubtitle,
   TransactionDataContainer,
-  TransactionInputSubtitle,
   TransactionInputContainer,
   ButtonContainer,
   DecodeButton,
@@ -73,7 +72,7 @@ function App() {
         <Grid container spacing={2}>
           {/* Input Box */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={1}>
+            <Paper elevation={0}>
               <StyledBox>
                 <TransactionDataContainer>
                   <TransactionData variant="h6" gutterBottom>
@@ -93,9 +92,6 @@ function App() {
                     value={txData}
                     onChange={(e) => setTxData(e.target.value)}
                   />
-                  <TransactionInputSubtitle variant="body1" gutterBottom>
-                    eg. 0x8d80ff0a000000...
-                  </TransactionInputSubtitle>
                 </TransactionInputContainer>
                 <ButtonContainer>
                   <DecodeButton
@@ -125,7 +121,7 @@ function App() {
 
           {/* Output Box */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={1}>
+            <Paper elevation={0}>
               <StyledBox>
                 <TransactionData variant="h6" gutterBottom>
                 Called method

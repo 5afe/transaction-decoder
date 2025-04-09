@@ -20,4 +20,11 @@ export const createAppTheme = (prefersDarkMode: boolean) => createTheme({
       fontWeight: 500,
     },
   },
+  components: {
+    MuiPaper: {
+      defaultProps: {
+        elevation: 0,
+      },
+    },
+  },
 }); 
