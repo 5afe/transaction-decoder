@@ -166,6 +166,9 @@ export const StyledSelect = styled(Select)(() => ({
     backgroundColor: 'var(--background-paper)',
     paddingRight: '12px',
     marginBottom: '16px',
+    '& .MuiOutlinedInput-notchedOutline': {
+        border: 'none'
+    },
     '& .MuiSelect-select': {
         fontFamily: 'DM Sans',
         fontWeight: 400,
