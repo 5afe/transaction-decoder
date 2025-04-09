@@ -108,7 +108,12 @@ export const DecodeButton = styled(Button)(() => ({
     fontSize: '14px',
     lineHeight: '26px',
     letterSpacing: '0.46px',
-    textTransform: 'none'
+    textTransform: 'none',
+    boxShadow: 'none',
+    '&:hover': {
+        backgroundColor: 'var(--button-primary-hover)',
+        boxShadow: 'none'
+    }
 }));
 
 export const ClearButton = styled(Button)(() => ({
@@ -126,6 +131,7 @@ export const ClearButton = styled(Button)(() => ({
     textTransform: 'none',
     '&:hover': {
         backgroundColor: 'var(--background-white)', 
+        boxShadow: 'none'
     }
 }));
 
