@@ -85,16 +85,6 @@ export const TransactionDataContainer = styled(Box)(() => ({
     marginBottom: 'var(--space-6)'
 }));
 
-export const TransactionInputSubtitle = styled(Typography)(() => ({
-    fontFamily: 'DM Sans',
-    fontWeight: 400,
-    fontSize: '12px',
-    lineHeight: '20px',
-    letterSpacing: '0.4px',
-    color: 'var(--text-secondary-color)',
-    verticalAlign: 'middle'
-}));
-
 export const TransactionInputContainer = styled(Box)(() => ({
     display: 'flex',
     flexDirection: 'column',
