@@ -88,12 +88,10 @@ export const TransactionHeader = styled(Box, {
     alignItems: 'center',
     padding: '16px',
     cursor: 'pointer',
+    backgroundColor: expanded ? 'var(--background-main)' : 'transparent',
     '&:hover': {
-        backgroundColor: 'var(--background-hover)'
-    },
-    ...(expanded && {
-        backgroundColor: 'var(--background-main)'
-    })
+        backgroundColor: '#f4f4f4'
+    }
 }));
 
 export const TransactionContent = styled(Box)(() => ({
