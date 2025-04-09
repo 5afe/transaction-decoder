@@ -73,7 +73,7 @@ function App() {
         <Grid container spacing={2}>
           {/* Input Box */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={1}>
+            <Paper elevation={0}>
               <StyledBox>
                 <TransactionDataContainer>
                   <TransactionData variant="h6" gutterBottom>
@@ -125,7 +125,7 @@ function App() {
 
           {/* Output Box */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={1}>
+            <Paper elevation={0}>
               <StyledBox>
                 <TransactionData variant="h6" gutterBottom>
                 Called method
