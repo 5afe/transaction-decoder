@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Decoded, DecodedValue, decodeData, loadSignatures } from '../../utils/decoding';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import { IconButton, Collapse } from '@mui/material';
+import { IconButton, Collapse, Box } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { SelectChangeEvent } from '@mui/material/Select';
@@ -61,7 +61,7 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean, 
         if (!param.decoded && selectedSignature) loadDecodedData(selectedSignature)
     }, [param, setSelectedSignature, loadDecodedData])
     return (
-        <div>
+        <Box component="span">
             <span>
                 {param.label !== undefined && (
                     <FunctionLabel>{param.label}</FunctionLabel>
@@ -102,7 +102,7 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean, 
                 </StyledFormControl>
             )}
             { decodedData && <DecodedData decoded={decodedData} />}
-        </div>
+        </Box>
     )
 }
 
@@ -289,7 +289,7 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
     // For signMessage function, add specific formatting
     if (isSignMessage) {
         return (
-            <div>
+            <Box component="span">
                 <FunctionName>
                     {decoded.label}
                 </FunctionName>
@@ -306,14 +306,14 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
                         );
                     })}
                 </SignatureSection>
-            </div>
+            </Box>
         );
     }
 
     // For setApprovalForAll function, add specific formatting
     if (isSetApprovalForAll) {
         return (
-            <div>
+            <Box component="span">
                 <FunctionName>
                     {decoded.label}
                 </FunctionName>
@@ -339,12 +339,12 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
                         />
                     ))}
                 </Collapse>
-            </div>
+            </Box>
         );
     }
 
     return (
-        <div>
+        <Box component="span">
             {isTransactionLabel ? 
                 <TransactionLabel>{decoded.label}</TransactionLabel> : 
                 <FunctionName>{decoded.label}</FunctionName>
@@ -360,7 +360,7 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
                     />
                 ))}
             </Collapse>
-        </div>
+        </Box>
     );
 }
 
