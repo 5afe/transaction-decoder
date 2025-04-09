@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
-import { Paper, Grid } from '@mui/material';
+import Image from 'next/image';
 import { ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,10 +11,8 @@ import { DecodedValue, loadSignatures } from '../../utils/decoding';
 import { createAppTheme } from '../../styles/theme';
 import { 
   Root, 
-  Title, 
   StyledTextField, 
   TransactionData, 
-  StyledBox, 
   TransactionDataSubtitle,
   TransactionDataContainer,
   TransactionInputContainer,
@@ -23,7 +21,14 @@ import {
   ClearButton,
   PlaceholderText,
   Footer,
-  FooterLink
+  FooterLink,
+  Sidebar,
+  SidebarHeader,
+  MainContent,
+  SidebarToggle,
+  OutputBox,
+  InputBox,
+  LogoContainer
 } from './styles';
 
 function App() {
@@ -31,12 +36,17 @@ function App() {
   const [txData, setTxData] = useState(query.get("data") || "")
   const [dataInfo, setDataInfo] = useState<DecodedValue | undefined>(undefined)
   const [isMounted, setIsMounted] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   
   useEffect(() => {
     setIsMounted(true)
   }, [])
   
-  const loadDataInfo = useCallback(async (data: string) => {
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+  
+  const loadDataInfo = async (data: string) => {
     setTxData(data)
     if (data.length < 10) {
       setDataInfo(undefined)
@@ -52,7 +62,7 @@ function App() {
       setDataInfo(undefined)
       console.error(e)
     }
-  }, [])
+  }
   
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const theme = React.useMemo(() => createAppTheme(prefersDarkMode), [prefersDarkMode])
@@ -64,86 +74,89 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Root>
-        <Title variant="h3">
-          Decode Safe Transaction
-        </Title>
-        
-        <Grid container spacing={2}>
+      <Sidebar className={isSidebarOpen ? "" : "sidebar-collapsed"}>
+        <SidebarHeader>
+          <LogoContainer>
+            <Image src="/logo.svg" alt="Safe Logo" width={24} height={24} />
+          </LogoContainer>
+          <div onClick={toggleSidebar} style={{ cursor: 'pointer' }}>
+            <Image src="/sidebar_icon.svg" alt="sidebar-icon" width={24} height={24} />
+          </div>
+        </SidebarHeader>
+        <div className="sidebar-content">
           {/* Input Box */}
-          <Grid item xs={12} md={6}>
-            <Paper elevation={0}>
-              <StyledBox>
-                <TransactionDataContainer>
-                  <TransactionData variant="h6" gutterBottom>
-                    Transaction data
-                  </TransactionData>
-                  <TransactionDataSubtitle variant="body1" gutterBottom>
-                    Use raw transaction data to decode its function.
-                  </TransactionDataSubtitle>
-                </TransactionDataContainer>
-                <TransactionInputContainer>
-                  <StyledTextField
-                    multiline
-                    rows={8}
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Enter transaction data (e.g. 0x6a7612020000...)"
-                    value={txData}
-                    onChange={(e) => setTxData(e.target.value)}
-                  />
-                </TransactionInputContainer>
-                <ButtonContainer>
-                  <DecodeButton
-                    variant="contained" 
-                    color="primary" 
-                    onClick={() => loadDataInfo(txData)}
-                    disabled={!txData.trim()}
-                  >
-                    Decode transaction
-                  </DecodeButton>
-                  {txData.trim() && (
-                    <ClearButton
-                      variant="contained" 
-                      color="primary" 
-                      onClick={() => {
-                        setTxData("");
-                        setDataInfo(undefined);
-                      }}
-                    >
-                      Clear all
-                    </ClearButton>
-                  )}
-                </ButtonContainer>
-              </StyledBox>
-            </Paper>
-          </Grid>
-
-          {/* Output Box */}
-          <Grid item xs={12} md={6}>
-            <Paper elevation={0}>
-              <StyledBox>
-                <TransactionData variant="h6" gutterBottom>
-                Called method
-                </TransactionData>
-                {dataInfo ? (
-                  <DecodedParam param={dataInfo} hideValue={true} />
-                ) : (
-                  <PlaceholderText>
-                    Your decoded transaction data will appear here.
-                  </PlaceholderText>
-                )}
-              </StyledBox>
-            </Paper>
-          </Grid>
-        </Grid>
-        
+          <InputBox>
+            <TransactionDataContainer>
+              <TransactionData variant="h6" gutterBottom>
+                Decode Safe transaction
+              </TransactionData>
+              <TransactionDataSubtitle variant="body1" gutterBottom>
+                Copy raw transaction data and paste it below to decode its function.
+              </TransactionDataSubtitle>
+            </TransactionDataContainer>
+            <TransactionInputContainer>
+              <StyledTextField
+                multiline
+                rows={8}
+                variant="outlined"
+                fullWidth
+                placeholder="Enter raw data (e.g. 0x6a761202020000...)"
+                value={txData}
+                onChange={(e) => setTxData(e.target.value)}
+              />
+            </TransactionInputContainer>
+            <ButtonContainer>
+              <DecodeButton
+                variant="contained" 
+                color="primary" 
+                onClick={() => loadDataInfo(txData)}
+                disabled={!txData.trim()}
+              >
+                Decode transaction
+              </DecodeButton>
+              {txData.trim() && (
+                <ClearButton
+                  variant="contained" 
+                  color="primary" 
+                  onClick={() => {
+                    setTxData("");
+                    setDataInfo(undefined);
+                  }}
+                >
+                  Clear all
+                </ClearButton>
+              )}
+            </ButtonContainer>
+          </InputBox>
+        </div>
         {/* Footer */}
         <Footer>
           made by <FooterLink href="https://github.com/rmeissner" target="_blank" rel="noopener">rmeissner</FooterLink>. 
           powered by <FooterLink href="https://www.4byte.directory" target="_blank" rel="noopener">4byte.directory</FooterLink>
         </Footer>
-      </Root>
+      </Sidebar>
+
+      <MainContent className={`${isSidebarOpen ? "" : "main-expanded"} ${!dataInfo ? "empty-state" : ""}`}>
+        {!isSidebarOpen && (
+          <SidebarToggle onClick={toggleSidebar}>
+            <Image src="/sidebar_icon.svg" alt="expand sidebar" width={24} height={24} />
+          </SidebarToggle>
+        )}
+        {dataInfo ? (
+          <Root>
+            <OutputBox>
+              <TransactionData variant="h6" gutterBottom>
+                Called method
+              </TransactionData>
+              <DecodedParam param={dataInfo} hideValue={true} />
+            </OutputBox>
+          </Root>
+        ) : (
+          <PlaceholderText>
+            Your decoded transaction data will appear here.
+          </PlaceholderText>
+        )}
+      </MainContent>
     </ThemeProvider>
   );
 }

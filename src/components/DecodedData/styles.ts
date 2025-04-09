@@ -54,7 +54,7 @@ export const FunctionName = styled('span')(() => ({
 }));
 
 export const StyledDivider = styled(Divider)(() => ({
-    width: '446px',
+    width: 'auto',
     height: '1px',
     border: 'none',
     borderTop: '1px solid var(--light-border)',
