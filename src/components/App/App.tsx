@@ -28,7 +28,9 @@ import {
   SidebarToggle,
   OutputBox,
   InputBox,
-  LogoContainer
+  LogoContainer,
+  SidebarIconContainer,
+  Tooltip
 } from './styles';
 
 function App() {
@@ -79,9 +81,12 @@ function App() {
           <LogoContainer>
             <Image src="/logo.svg" alt="Safe Logo" width={24} height={24} />
           </LogoContainer>
-          <div onClick={toggleSidebar} style={{ cursor: 'pointer' }}>
+          <SidebarIconContainer onClick={toggleSidebar}>
             <Image src="/sidebar_icon.svg" alt="sidebar-icon" width={24} height={24} />
-          </div>
+            <Tooltip className="tooltip">
+              Hide sidebar
+            </Tooltip>
+          </SidebarIconContainer>
         </SidebarHeader>
         <div className="sidebar-content">
           {/* Input Box */}

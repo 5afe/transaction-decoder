@@ -250,7 +250,11 @@ export const SidebarToggle = styled(Box)(() => ({
   zIndex: 100,
   '&:hover': {
     opacity: 0.8,
-  }
+  },
+  '&:hover .tooltip': {
+    visibility: 'visible',
+    opacity: 1,
+  },
 }));
 
 export const OutputBox = styled(Box)(() => ({
@@ -273,4 +277,54 @@ export const LogoContainer = styled(Box)(({ theme }) => ({
       filter: theme.palette.mode === 'dark' ? 'invert(1)' : 'none',
     }
   }
+}));
+
+export const SidebarIconContainer = styled(Box)(() => ({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  width: 39,
+  height: 39,
+  borderRadius: 'var(--raduis-8x)',
+  transition: 'background-color 0.2s ease',
+  '&:hover': {
+    backgroundColor: 'var(--background-main)',
+  },
+  '&:hover .tooltip': {
+    visibility: 'visible',
+    opacity: 1,
+  }
+}));
+
+export const Tooltip = styled(Box)(() => ({
+  visibility: 'hidden',
+  opacity: 0,
+  position: 'absolute',
+  bottom: '-24px',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  backgroundColor: 'var(--primary-main)',
+  color: 'var(--text-contrast-color)',
+  width: '87px',
+  height: '22px',
+  borderRadius: '4px',
+  paddingTop: 'var(--space-1)',
+  paddingRight: 'var(--space-2)',
+  paddingBottom: 'var(--space-1)',
+  paddingLeft: 'var(--space-2)',
+  whiteSpace: 'nowrap',
+  transition: 'opacity 0.2s ease',
+  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+  fontFamily: 'DM Sans',
+  fontWeight: 400,
+  fontSize: '12px',
+  lineHeight: '14px',
+  letterSpacing: '0px',
+  verticalAlign: 'middle',
+  zIndex: 1000,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));

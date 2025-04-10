@@ -188,3 +188,17 @@ export const SignatureValue = styled(Typography)(() => ({
     color: 'var(--text-primary-color)',
     wordBreak: 'break-all'
 }));
+
+export const DataFirstPart = styled('span')(() => ({
+    fontFamily: 'DM Mono',
+    color: '#121312'
+}));
+
+export const DataRemainingPart = styled('span')(() => ({
+    fontFamily: 'DM Mono',
+    color: 'grey'
+}));
+
+export const InlineSpan = styled('span')(() => ({
+    display: 'inline'
+}));
