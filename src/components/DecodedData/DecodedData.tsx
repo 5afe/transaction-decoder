@@ -25,7 +25,10 @@ import {
     SignatureSection,
     SignatureLabel,
     StyledSelect,
-    SignatureValue
+    SignatureValue,
+    DataFirstPart,
+    DataRemainingPart,
+    InlineSpan
 } from './styles';
 
 interface Props {
@@ -71,7 +74,12 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean, 
                 <ValuesContainer>
                     {collapseValue ? (
                         <>
-                            {String(param.value).slice(0, 90) + "..."}
+                            <DataFirstPart>
+                                {String(param.value).slice(0, 10)}
+                            </DataFirstPart>
+                            <DataRemainingPart>
+                                {String(param.value).slice(10, 90) + "..."}
+                            </DataRemainingPart>
                             {param.canCollapse !== undefined && (
                                 <ShowAllLink onClick={() => setCollapsedValue(!collapseValue)}>
                                     Show all
@@ -80,7 +88,12 @@ export const DecodedParam: React.FC<{ param: DecodedValue, hideValue?: boolean, 
                         </>
                     ) : (
                         <>
-                            {String(param.value)}
+                            <DataFirstPart>
+                                {String(param.value).slice(0, 10)}
+                            </DataFirstPart>
+                            <DataRemainingPart>
+                                {String(param.value).slice(10)}
+                            </DataRemainingPart>
                             {param.canCollapse !== undefined && (
                                 <ShowAllLink onClick={() => setCollapsedValue(!collapseValue)}>
                                     {" "}Collapse
@@ -188,9 +201,30 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
                                 <ParamRow key={i}>
                                     <ParamLabel>Data</ParamLabel>
                                     <ParamValue>
-                                        <span style={{ display: 'inline' }}>
-                                            {showFullData ? String(p.value) : shortenedData}
-                                        </span>
+                                        <InlineSpan>
+                                            {showFullData 
+                                                ? (
+                                                    <>
+                                                        <DataFirstPart>
+                                                            {String(p.value).substring(0, 10)}
+                                                        </DataFirstPart>
+                                                        <DataRemainingPart>
+                                                            {String(p.value).substring(10)}
+                                                        </DataRemainingPart>
+                                                    </>
+                                                ) 
+                                                : (
+                                                    <>
+                                                        <DataFirstPart>
+                                                            {shortenedData.substring(0, 10)}
+                                                        </DataFirstPart>
+                                                        <DataRemainingPart>
+                                                            {shortenedData.substring(10)}
+                                                        </DataRemainingPart>
+                                                    </>
+                                                )
+                                            }
+                                        </InlineSpan>
                                         <ShowAllLink 
                                             onClick={() => setShowFullData(!showFullData)}
                                             style={{ display: 'inline-block', whiteSpace: 'nowrap' }}
@@ -230,7 +264,12 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
                             </StyledSelect>
                             {decodedData && (
                                 <SignatureValue>
-                                    {data}
+                                    <DataFirstPart>
+                                        {data.substring(0, 10)}
+                                    </DataFirstPart>
+                                    <DataRemainingPart>
+                                        {data.substring(10)}
+                                    </DataRemainingPart>
                                 </SignatureValue>
                             )}
                         </SignatureSection>
@@ -303,7 +342,12 @@ const DecodedData: React.FC<Props> = ({ decoded }) => {
                             <ParamRow key={index}>
                                 <ParamLabel>bytes</ParamLabel>
                                 <ParamValue>
-                                    {String(param.value)}
+                                    <DataFirstPart>
+                                        {String(param.value).substring(0, 10)}
+                                    </DataFirstPart>
+                                    <DataRemainingPart>
+                                        {String(param.value).substring(10)}
+                                    </DataRemainingPart>
                                 </ParamValue>
                             </ParamRow>
                         );
