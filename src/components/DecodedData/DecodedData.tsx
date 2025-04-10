@@ -188,9 +188,12 @@ export const TransactionItem: React.FC<{ param: DecodedValue, index: number }> =
                                 <ParamRow key={i}>
                                     <ParamLabel>Data</ParamLabel>
                                     <ParamValue>
-                                        {showFullData ? String(p.value) : shortenedData}
+                                        <span style={{ display: 'inline' }}>
+                                            {showFullData ? String(p.value) : shortenedData}
+                                        </span>
                                         <ShowAllLink 
                                             onClick={() => setShowFullData(!showFullData)}
+                                            style={{ display: 'inline-block', whiteSpace: 'nowrap' }}
                                         >
                                             {showFullData ? 'Collapse' : 'Show all'}
                                         </ShowAllLink>
