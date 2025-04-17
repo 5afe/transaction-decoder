@@ -90,7 +90,7 @@ export const TransactionHeader = styled(Box, {
     cursor: 'pointer',
     backgroundColor: expanded ? 'var(--background-main)' : 'transparent',
     '&:hover': {
-        backgroundColor: '#f4f4f4'
+        backgroundColor: 'var(--gray-alpha-200)'
     }
 }));
 
@@ -191,12 +191,12 @@ export const SignatureValue = styled(Typography)(() => ({
 
 export const DataFirstPart = styled('span')(() => ({
     fontFamily: 'DM Mono',
-    color: '#121312'
+    color: 'var(--text-primary-color)'
 }));
 
 export const DataRemainingPart = styled('span')(() => ({
     fontFamily: 'DM Mono',
-    color: 'grey'
+    color: 'var(--text-secondary-color)'
 }));
 
 export const InlineSpan = styled('span')(() => ({
